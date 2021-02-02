@@ -45,5 +45,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {	
-	gfx.DrawSprite(wnd.mouse.GetPosX(), wnd.mouse.GetPosY(),surf);
+	gfx.DrawSpriteNonChroma(wnd.mouse.GetPosX(), wnd.mouse.GetPosY(),surf);
 }

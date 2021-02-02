@@ -299,17 +299,17 @@ void Graphics::DrawIsoRightTriBR(int x, int y, int size, Color c)
 	}
 }
 
-void Graphics::DrawSprite(int x, int y, const Surface & surface)
+void Graphics::DrawSpriteNonChroma(int x, int y, const Surface & surface)
 {
-	DrawSprite(x, y, RectI(0,surface.GetWidth(), 0, surface.GetHeight()), surface);
+	DrawSpriteNonChroma(x, y, RectI(0,surface.GetWidth(), 0, surface.GetHeight()), surface);
 }
 
-void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const Surface & surface)
+void Graphics::DrawSpriteNonChroma(int x, int y, const RectI & srcRect, const Surface & surface)
 {
-	DrawSprite(x, y, srcRect, GetGfxRectI(), surface);
+	DrawSpriteNonChroma(x, y, srcRect, GetGfxRectI(), surface);
 }
 
-void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface)
+void Graphics::DrawSpriteNonChroma(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface)
 {
 	RectI drawRect = srcRect;
 	int drawX = x;
