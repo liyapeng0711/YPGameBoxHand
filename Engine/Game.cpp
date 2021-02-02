@@ -26,7 +26,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	surf("Images\\link90x90.bmp")
+	surf("Images\\Yapeng Li.bmp")
 {
 
 }
@@ -45,5 +45,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {	
-	gfx.DrawSprite(wnd.mouse.GetPosX(), wnd.mouse.GetPosY(),RectI(VecI(180,180),90,90), surf);
+	gfx.DrawSprite(wnd.mouse.GetPosX(), wnd.mouse.GetPosY(), surf, Colors::White);
 }

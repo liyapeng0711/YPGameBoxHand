@@ -311,6 +311,10 @@ void Graphics::DrawSpriteNonChroma(int x, int y, const RectI & srcRect, const Su
 
 void Graphics::DrawSpriteNonChroma(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface)
 {
+	assert(srcRect.left >= 0);
+	assert(srcRect.top >= 0);
+	assert(srcRect.right <= surface.GetWidth());
+	assert(srcRect.bottom <= surface.GetHeight());
 	RectI drawRect = srcRect;
 	int drawX = x;
 	int drawY = y;
@@ -353,6 +357,10 @@ void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const Surface & s
 
 void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface, Color c)
 {
+	assert(srcRect.left >= 0);
+	assert(srcRect.top >= 0);
+	assert(srcRect.right <= surface.GetWidth());
+	assert(srcRect.bottom <= surface.GetHeight());
 	RectI drawRect = srcRect;
 	int drawX = x;
 	int drawY = y;
@@ -379,6 +387,11 @@ void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const RectI & cli
 		for (int j = drawRect.top; j < drawRect.bottom; ++j)
 		{
 			Color tempC = surface.GetPixel(i, j);
+			//int dR = tempC.GetR() - c.GetR();
+			//int dG = tempC.GetG() - c.GetG();
+			//int dB = tempC.GetB() - c.GetB();
+			//int threshold = 100;
+			//bool isNear = abs(dR) < threshold && abs(dG) < threshold && abs(dB) < threshold;
 			if (tempC != c)
 			{
 				PutPixel(drawX + i - drawRect.left, drawY + j - drawRect.top, tempC);
