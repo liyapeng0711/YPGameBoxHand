@@ -24,6 +24,7 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "RectF.h"
+#include "Surface.h"
 
 class Graphics
 {
@@ -133,6 +134,7 @@ public:
 	void DrawIsoRightTriUR(int x, int y, int size, Color c);
 	void DrawIsoRightTriBL(int x, int y, int size, Color c);
 	void DrawIsoRightTriBR(int x, int y, int size, Color c);
+	void DrawSprite(int x, int y, const Surface& surface);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

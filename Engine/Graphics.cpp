@@ -299,6 +299,17 @@ void Graphics::DrawIsoRightTriBR(int x, int y, int size, Color c)
 	}
 }
 
+void Graphics::DrawSprite(int x, int y, const Surface & surface)
+{
+	for (int i = 0; i < surface.GetWidth(); ++i)
+	{
+		for (int j = 0; j < surface.GetHeight(); ++j)
+		{
+			PutPixel(x + i, y + j, surface.GetPixel(i, j));
+		}
+	}
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)

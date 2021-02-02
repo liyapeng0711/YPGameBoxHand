@@ -152,6 +152,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SourcePixes.h" />
     <ClInclude Include="FrameTimer.h" />
+    <ClInclude Include="Surface.h" />
     <ClInclude Include="VecF.h" />
     <ClInclude Include="VecI.h" />
     <ClInclude Include="XAudio\XAudio2.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="RectI.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Surface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
