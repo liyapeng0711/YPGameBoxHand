@@ -25,6 +25,7 @@
 #include "Colors.h"
 #include "RectF.h"
 #include "Surface.h"
+#include "RectI.h"
 
 class Graphics
 {
@@ -126,15 +127,21 @@ public:
 			}
 		}
 	}
-	static RectF GetGfxRect()
+	static RectF GetGfxRectF()
 	{
 		return RectF(0.0f, (float)ScreenWidth, 0.0f, (float)ScreenHeight);
+	}
+	static RectI GetGfxRectI()
+	{
+		return RectI(0, ScreenWidth, 0, ScreenHeight);
 	}
 	void DrawIsoRightTriUL(int x, int y, int size, Color c);
 	void DrawIsoRightTriUR(int x, int y, int size, Color c);
 	void DrawIsoRightTriBL(int x, int y, int size, Color c);
 	void DrawIsoRightTriBR(int x, int y, int size, Color c);
 	void DrawSprite(int x, int y, const Surface& surface);
+	void DrawSprite(int x, int y, const RectI& srcRect, const Surface& surface); // draw partial of a pic
+	void DrawSprite(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface); // draw clip of two rect (different from intersection)
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
