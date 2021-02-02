@@ -142,6 +142,9 @@ public:
 	void DrawSpriteNonChroma(int x, int y, const Surface& surface);
 	void DrawSpriteNonChroma(int x, int y, const RectI& srcRect, const Surface& surface); // draw partial of a pic
 	void DrawSpriteNonChroma(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface); // draw clip of two rect (different from intersection)
+	void DrawSprite(int x, int y, const Surface& surface, Color c = Colors::Magenta);
+	void DrawSprite(int x, int y, const RectI& srcRect, const Surface& surface, Color c = Colors::Magenta); // draw partial of a pic
+	void DrawSprite(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface, Color c = Colors::Magenta); // draw clip of two rect (different from intersection)
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

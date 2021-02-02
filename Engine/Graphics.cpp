@@ -341,6 +341,52 @@ void Graphics::DrawSpriteNonChroma(int x, int y, const RectI & srcRect, const Re
 	}
 }
 
+void Graphics::DrawSprite(int x, int y, const Surface & surface, Color c)
+{
+	DrawSprite(x, y, RectI(0, surface.GetWidth(), 0, surface.GetHeight()), surface, c);
+}
+
+void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const Surface & surface, Color c)
+{
+	DrawSprite(x, y, srcRect, GetGfxRectI(), surface, c);
+}
+
+void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface, Color c)
+{
+	RectI drawRect = srcRect;
+	int drawX = x;
+	int drawY = y;
+	if (x < clip.left)
+	{
+		drawRect.left += (clip.left - x);
+		drawX = clip.left;
+	}
+	if (y < clip.top)
+	{
+		drawRect.top += (clip.top - y);
+		drawY = clip.top;
+	}
+	if (x + srcRect.GetWidth() > clip.right)
+	{
+		drawRect.right -= x + srcRect.GetWidth() - clip.right;
+	}
+	if (y + srcRect.GetHeight() > clip.bottom)
+	{
+		drawRect.bottom -= y + srcRect.GetHeight() - clip.bottom;
+	}
+	for (int i = drawRect.left; i < drawRect.right; ++i)
+	{
+		for (int j = drawRect.top; j < drawRect.bottom; ++j)
+		{
+			Color tempC = surface.GetPixel(i, j);
+			if (tempC != c)
+			{
+				PutPixel(drawX + i - drawRect.left, drawY + j - drawRect.top, tempC);
+			}
+		}
+	}
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
