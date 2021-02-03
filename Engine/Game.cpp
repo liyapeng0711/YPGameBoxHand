@@ -26,7 +26,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	surf("Images\\Yapeng Li.bmp")
+	boy({20.0f, 20.0f})
 {
 
 }
@@ -41,9 +41,30 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	VecF dir(0, 0);
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		dir.x -= 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		dir.x += 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_UP))
+	{
+		dir.y -= 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		dir.y += 1.0f;
+	}
+	boy.SetDirection(dir);
+
+	float dt = ft.Mark();
+	boy.Update(dt);
 }
 
 void Game::ComposeFrame()
 {	
-	gfx.DrawSprite(wnd.mouse.GetPosX(), wnd.mouse.GetPosY(), surf, Colors::White);
+	boy.Draw(gfx);
 }

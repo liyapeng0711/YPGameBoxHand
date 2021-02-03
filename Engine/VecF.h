@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include "VecI.h"
 
 class VecF
 {
@@ -72,6 +73,10 @@ public:
 	{
 		y = -y;
 		return *this;
+	}
+	explicit operator VecI()const
+	{
+		return{ int(x), int(y) };
 	}
 
 	//friend class RectF;

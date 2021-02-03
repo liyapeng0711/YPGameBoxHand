@@ -387,11 +387,6 @@ void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const RectI & cli
 		for (int j = drawRect.top; j < drawRect.bottom; ++j)
 		{
 			Color tempC = surface.GetPixel(i, j);
-			//int dR = tempC.GetR() - c.GetR();
-			//int dG = tempC.GetG() - c.GetG();
-			//int dB = tempC.GetB() - c.GetB();
-			//int threshold = 100;
-			//bool isNear = abs(dR) < threshold && abs(dG) < threshold && abs(dB) < threshold;
 			if (tempC != c)
 			{
 				PutPixel(drawX + i - drawRect.left, drawY + j - drawRect.top, tempC);
