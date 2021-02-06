@@ -395,6 +395,110 @@ void Graphics::DrawSprite(int x, int y, const RectI & srcRect, const RectI & cli
 	}
 }
 
+void Graphics::DrawSpriteSubstitute(int x, int y, const Surface & surface, Color subC, Color c)
+{
+	DrawSpriteSubstitute(x, y, RectI(0, surface.GetWidth(), 0, surface.GetHeight()), surface, subC, c);
+}
+
+void Graphics::DrawSpriteSubstitute(int x, int y, const RectI & srcRect, const Surface & surface, Color subC, Color c)
+{
+	DrawSpriteSubstitute(x, y, srcRect, GetGfxRectI(), surface, subC, c);
+}
+
+void Graphics::DrawSpriteSubstitute(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface, Color subC, Color c)
+{
+	assert(srcRect.left >= 0);
+	assert(srcRect.top >= 0);
+	assert(srcRect.right <= surface.GetWidth());
+	assert(srcRect.bottom <= surface.GetHeight());
+	RectI drawRect = srcRect;
+	int drawX = x;
+	int drawY = y;
+	if (x < clip.left)
+	{
+		drawRect.left += (clip.left - x);
+		drawX = clip.left;
+	}
+	if (y < clip.top)
+	{
+		drawRect.top += (clip.top - y);
+		drawY = clip.top;
+	}
+	if (x + srcRect.GetWidth() > clip.right)
+	{
+		drawRect.right -= x + srcRect.GetWidth() - clip.right;
+	}
+	if (y + srcRect.GetHeight() > clip.bottom)
+	{
+		drawRect.bottom -= y + srcRect.GetHeight() - clip.bottom;
+	}
+	for (int i = drawRect.left; i < drawRect.right; ++i)
+	{
+		for (int j = drawRect.top; j < drawRect.bottom; ++j)
+		{
+			Color tempC = surface.GetPixel(i, j);
+			if (tempC != c)
+			{
+				PutPixel(drawX + i - drawRect.left, drawY + j - drawRect.top, subC);
+			}
+		}
+	}
+}
+
+void Graphics::DrawSpriteGhost(int x, int y, const Surface & surface, Color c)
+{
+	DrawSpriteGhost(x, y, RectI(0, surface.GetWidth(), 0, surface.GetHeight()), surface, c);
+}
+
+void Graphics::DrawSpriteGhost(int x, int y, const RectI & srcRect, const Surface & surface, Color c)
+{
+	DrawSpriteGhost(x, y, srcRect, GetGfxRectI(), surface, c);
+}
+
+void Graphics::DrawSpriteGhost(int x, int y, const RectI & srcRect, const RectI & clip, const Surface & surface, Color c)
+{
+	assert(srcRect.left >= 0);
+	assert(srcRect.top >= 0);
+	assert(srcRect.right <= surface.GetWidth());
+	assert(srcRect.bottom <= surface.GetHeight());
+	RectI drawRect = srcRect;
+	int drawX = x;
+	int drawY = y;
+	if (x < clip.left)
+	{
+		drawRect.left += (clip.left - x);
+		drawX = clip.left;
+	}
+	if (y < clip.top)
+	{
+		drawRect.top += (clip.top - y);
+		drawY = clip.top;
+	}
+	if (x + srcRect.GetWidth() > clip.right)
+	{
+		drawRect.right -= x + srcRect.GetWidth() - clip.right;
+	}
+	if (y + srcRect.GetHeight() > clip.bottom)
+	{
+		drawRect.bottom -= y + srcRect.GetHeight() - clip.bottom;
+	}
+	for (int i = drawRect.left; i < drawRect.right; ++i)
+	{
+		for (int j = drawRect.top; j < drawRect.bottom; ++j)
+		{
+			const int screenX = drawX + i - drawRect.left;
+			const int screenY = drawY + j - drawRect.top;
+			Color tempC = surface.GetPixel(i, j);
+			Color baseC = GetPixel(screenX, screenY);
+			Color avgC = tempC*0.5f + baseC*0.5f;
+			if (tempC != c)
+			{
+				PutPixel(screenX, screenY, avgC);
+			}
+		}
+	}
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
@@ -471,6 +575,15 @@ void Graphics::PutPixel( int x,int y,Color c )
 	assert( y >= 0 );
 	assert( y < int( Graphics::ScreenHeight ) );
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
+}
+
+Color Graphics::GetPixel(int x, int y) const
+{
+	assert(x >= 0);
+	assert(x < int(Graphics::ScreenWidth));
+	assert(y >= 0);
+	assert(y < int(Graphics::ScreenHeight));
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
 void Graphics::Swap(int & a, int & b) const

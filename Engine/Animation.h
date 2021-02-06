@@ -10,6 +10,8 @@ public:
 	void Update(float dt);
 	void Draw(const VecI& pos, Graphics& gfx)const;
 	void Draw(const VecI& pos, Graphics& gfx, const RectI& clip)const;
+	void DrawColor(const VecI& pos, Graphics& gfx, Color c)const; // draw single color
+	void DrawGhost(const VecI& pos, Graphics& gfx)const;
 private:
 	void Advance();
 private:

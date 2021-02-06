@@ -112,6 +112,11 @@ static Color operator+(Color c1, Color c2)
 	return Color((c1.GetR() +c2.GetR()) % 256, (c1.GetG() + c2.GetG()) % 256, (c1.GetB() + c2.GetB()) % 256);
 }
 
+static Color operator*(Color c, float f)
+{
+	return Color(int(c.GetR()*f) % 256, int(c.GetG()*f) % 256, int(c.GetB()*f) % 256);
+}
+
 namespace Colors
 {
 	static constexpr Color MakeRGB( unsigned char r,unsigned char g,unsigned char b )

@@ -26,7 +26,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	boy({20.0f, 20.0f})
+	boy({20.0f, 20.0f}),
+	font("Images\\Fixedsys16x28.bmp")
 {
 
 }
@@ -60,11 +61,22 @@ void Game::UpdateModel()
 	}
 	boy.SetDirection(dir);
 
+	while (!wnd.kbd.KeyIsEmpty())
+	{
+		const auto e = wnd.kbd.ReadKey();
+		if (e.IsPress() && e.GetCode() == VK_SPACE)
+		{
+			boy.ActivateEffect();
+			hit.Play();
+		}
+	}
+
 	float dt = ft.Mark();
 	boy.Update(dt);
 }
 
 void Game::ComposeFrame()
 {	
-	boy.Draw(gfx);
+	font.DrawTextChili("Yapeng Li, Hello!\nNice to meet you:)", wnd.mouse.GetPos(), gfx, Colors::White);
+	boy.DrawGhost(gfx);
 }

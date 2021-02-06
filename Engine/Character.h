@@ -21,6 +21,8 @@ public:
 	void Update(float dt);
 	void SetDirection(const VecF& dir);
 	void Draw(Graphics& gfx)const;
+	void DrawGhost(Graphics& gfx)const;
+	void ActivateEffect();
 private:
 	VecF pos;
 	VecF vel = { 0,0 };
@@ -28,4 +30,8 @@ private:
 	std::vector<Animation> animations;
 	Surface sprite;
 	Sequence iCurSequence = Sequence::StandingDown;
+	static constexpr float effectDuration = 0.045f;
+	float effectTime = 0;
+	bool effectActive = false;
+	Color effectColor = Colors::Red;
 };
