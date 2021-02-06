@@ -26,7 +26,7 @@ public:
 private:
 	VecF pos;
 	VecF vel = { 0,0 };
-	float speed = 80.0f;
+	float speed = 160.0f;
 	std::vector<Animation> animations;
 	Surface sprite;
 	Sequence iCurSequence = Sequence::StandingDown;

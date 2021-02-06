@@ -139,18 +139,55 @@ public:
 	void DrawIsoRightTriUR(int x, int y, int size, Color c);
 	void DrawIsoRightTriBL(int x, int y, int size, Color c);
 	void DrawIsoRightTriBR(int x, int y, int size, Color c);
-	void DrawSpriteNonChroma(int x, int y, const Surface& surface);
-	void DrawSpriteNonChroma(int x, int y, const RectI& srcRect, const Surface& surface); // draw partial of a pic
-	void DrawSpriteNonChroma(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface); // draw clip of two rect (different from intersection)
-	void DrawSprite(int x, int y, const Surface& surface, Color c = Colors::Magenta);
-	void DrawSprite(int x, int y, const RectI& srcRect, const Surface& surface, Color c = Colors::Magenta); // draw partial of a pic
-	void DrawSprite(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface, Color c = Colors::Magenta); // draw clip of two rect (different from intersection)
-	void DrawSpriteSubstitute(int x, int y, const Surface& surface, Color subC, Color c = Colors::Magenta);
-	void DrawSpriteSubstitute(int x, int y, const RectI& srcRect, const Surface& surface, Color subC, Color c = Colors::Magenta);
-	void DrawSpriteSubstitute(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface, Color subC, Color c = Colors::Magenta);
-	void DrawSpriteGhost(int x, int y, const Surface& surface, Color c = Colors::Magenta);
-	void DrawSpriteGhost(int x, int y, const RectI& srcRect, const Surface& surface, Color c = Colors::Magenta);
-	void DrawSpriteGhost(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface, Color c = Colors::Magenta);
+	template <typename T>
+	void DrawSprite(int x, int y, const Surface& surface, T t)
+	{
+		DrawSprite(x, y, RectI(0, surface.GetWidth(), 0, surface.GetHeight()), surface, t);
+	}
+	template <typename T>
+	void DrawSprite(int x, int y, const RectI& srcRect, const Surface& surface, T t) // draw partial of a pic
+	{
+		DrawSprite(x, y, srcRect, GetGfxRectI(), surface, t);
+	}
+	template <typename T>
+	void DrawSprite(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface, T t) // draw clip of two rect (different from intersection)
+	{
+		assert(srcRect.left >= 0);
+		assert(srcRect.top >= 0);
+		assert(srcRect.right <= surface.GetWidth());
+		assert(srcRect.bottom <= surface.GetHeight());
+		RectI drawRect = srcRect;
+		int drawX = x;
+		int drawY = y;
+		if (x < clip.left)
+		{
+			drawRect.left += (clip.left - x);
+			drawX = clip.left;
+		}
+		if (y < clip.top)
+		{
+			drawRect.top += (clip.top - y);
+			drawY = clip.top;
+		}
+		if (x + srcRect.GetWidth() > clip.right)
+		{
+			drawRect.right -= x + srcRect.GetWidth() - clip.right;
+		}
+		if (y + srcRect.GetHeight() > clip.bottom)
+		{
+			drawRect.bottom -= y + srcRect.GetHeight() - clip.bottom;
+		}
+		for (int i = drawRect.left; i < drawRect.right; ++i)
+		{
+			for (int j = drawRect.top; j < drawRect.bottom; ++j)
+			{
+				Color tempC = surface.GetPixel(i, j);
+				int xDest = drawX + i - drawRect.left;
+				int yDest = drawY + j - drawRect.top;
+				t(tempC, xDest, yDest, *this);
+			}
+		}
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

@@ -1,4 +1,5 @@
 #include "Font.h"
+#include "SpriteEffect.h"
 
 Font::Font(const std::string & filename, Color chroma)
 	:
@@ -25,7 +26,7 @@ void Font::DrawTextChili(const std::string & text, const VecI & pos, Graphics & 
 			{
 				if (i != ' ')
 				{
-					gfx.DrawSpriteSubstitute(posChar.x, posChar.y, MapGlyphRect(i), surface, c, chroma);
+					gfx.DrawSprite(posChar.x, posChar.y, MapGlyphRect(i), surface, SpriteEffect::Substitution(chroma, c));
 				}
 			}
 			posChar.x += glyphWidth;
