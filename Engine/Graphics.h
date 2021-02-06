@@ -127,13 +127,10 @@ public:
 			}
 		}
 	}
-	static RectF GetGfxRectF()
+	template <typename T>
+	static Rect<T> GetGfxRect()
 	{
-		return RectF(0.0f, (float)ScreenWidth, 0.0f, (float)ScreenHeight);
-	}
-	static RectI GetGfxRectI()
-	{
-		return RectI(0, ScreenWidth, 0, ScreenHeight);
+		return{ T(0), T(ScreenWidth), T(0), T(ScreenHeight) };
 	}
 	void DrawIsoRightTriUL(int x, int y, int size, Color c);
 	void DrawIsoRightTriUR(int x, int y, int size, Color c);
@@ -147,7 +144,7 @@ public:
 	template <typename T>
 	void DrawSprite(int x, int y, const RectI& srcRect, const Surface& surface, T t) // draw partial of a pic
 	{
-		DrawSprite(x, y, srcRect, GetGfxRectI(), surface, t);
+		DrawSprite(x, y, srcRect, GetGfxRect<int>(), surface, t);
 	}
 	template <typename T>
 	void DrawSprite(int x, int y, const RectI& srcRect, const RectI& clip, const Surface& surface, T t) // draw clip of two rect (different from intersection)

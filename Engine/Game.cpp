@@ -77,6 +77,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {	
-	font.DrawTextChili("Yapeng Li, Hello!\nNice to meet you:)", wnd.mouse.GetPos(), gfx, Colors::White);
-	boy.DrawGhost(gfx);
+	font.DrawTextChili("Yapeng Li, Hello!\nNice to meet you:)", wnd.mouse.GetPos(), gfx, Colors::Yellow);
+	boy.Draw(gfx);
 }
