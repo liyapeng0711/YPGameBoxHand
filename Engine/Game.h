@@ -53,5 +53,6 @@ private:
 	Character boy;
 	Font font;
 	Sound hit = L"Sounds\\hit.wav";
+	Character enermy;
 	/********************************/
 };

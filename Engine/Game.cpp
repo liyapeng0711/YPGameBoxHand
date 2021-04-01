@@ -27,7 +27,8 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	boy({20.0f, 20.0f}),
-	font("Images\\Fixedsys16x28.bmp")
+	font("Images\\Fixedsys16x28.bmp"),
+	enermy({100.0f, 100.0f})
 {
 
 }
@@ -61,6 +62,25 @@ void Game::UpdateModel()
 	}
 	boy.SetDirection(dir);
 
+	VecF dir2(0, 0);
+	if (wnd.kbd.KeyIsPressed('A'))
+	{
+		dir2.x -= 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed('D'))
+	{
+		dir2.x += 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed('W'))
+	{
+		dir2.y -= 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed('S'))
+	{
+		dir2.y += 1.0f;
+	}
+	enermy.SetDirection(dir2);
+
 	while (!wnd.kbd.KeyIsEmpty())
 	{
 		const auto e = wnd.kbd.ReadKey();
@@ -73,10 +93,12 @@ void Game::UpdateModel()
 
 	float dt = ft.Mark();
 	boy.Update(dt);
+	enermy.Update(dt);
 }
 
 void Game::ComposeFrame()
 {	
 	font.DrawTextChili("Yapeng Li, Hello!\nNice to meet you:)", wnd.mouse.GetPos(), gfx, Colors::Yellow);
 	boy.Draw(gfx);
+	enermy.Draw(gfx);
 }
