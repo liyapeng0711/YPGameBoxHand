@@ -13,19 +13,19 @@ public:
 	{
 		assert(right >= left && bottom >= top);
 	}
-	Rect(const VecI & topLeft, const VecI & bottomRight)
+	Rect(const Vec2<T> & topLeft, const Vec2<T> & bottomRight)
 		:
 		Rect(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
 	{
 	}
-	Rect(const VecI & topLeft, T width, T height)
+	Rect(const Vec2<T> & topLeft, T width, T height)
 		:
-		Rect(topLeft, topLeft + VecI(width, height))
+		Rect(topLeft, topLeft + Vec2<T>(width, height))
 	{
 	}
-	Rect FromCenter(const VecI & center, T halfWidth, T halfHeight)
+	static Rect FromCenter(const Vec2<T> & center, T halfWidth, T halfHeight)
 	{
-		const VecI offset(halfWidth, halfHeight);
+		const Vec2<T> offset(halfWidth, halfHeight);
 		return Rect(center - offset, center + offset);
 	}
 	Rect GetExpanded(T offset) const

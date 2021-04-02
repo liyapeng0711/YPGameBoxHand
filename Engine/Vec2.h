@@ -46,7 +46,7 @@ public:
 	}
 	T GetLength()const
 	{
-		return sqrtf(GetLengthSq());
+		return std::sqrt(GetLengthSq());
 	}
 	Vec2 GetNormalized()const
 	{
@@ -73,6 +73,10 @@ public:
 	{
 		y = -y;
 		return *this;
+	}
+	bool IsZero()const
+	{
+		return x == T(0) && y == T(0);
 	}
 	// two methods of convertion: by constructor and operator
 	template <typename S>

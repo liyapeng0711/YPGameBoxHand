@@ -59,7 +59,6 @@ public:
 	}
 	void PutPixel(int x, int y, Color c);
 	Color GetPixel(int x, int y)const;
-	void Swap(int& a, int& b)const;
 	void DrawRect(int x0, int y0, int x1, int y1, Color c);
 	void DrawRectDim(int x, int y, int width, int height, Color c)
 	{

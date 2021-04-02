@@ -61,6 +61,10 @@ void Game::UpdateModel()
 		dir.y += 1.0f;
 	}
 	boy.SetDirection(dir);
+	if (wnd.kbd.KeyIsPressed(VK_NUMPAD1))
+	{
+		boy.Fire();
+	}
 
 	VecF dir2(0, 0);
 	if (wnd.kbd.KeyIsPressed('A'))

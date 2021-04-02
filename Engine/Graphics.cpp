@@ -386,22 +386,33 @@ Color Graphics::GetPixel(int x, int y) const
 	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
-void Graphics::Swap(int & a, int & b) const
-{
-	const int temp = a;
-	a = b;
-	b = temp;
-}
-
 void Graphics::DrawRect(int x0, int y0, int x1, int y1, Color c)
 {
+	// x0-x1, y0-y1
 	if (x0 > x1)
-	{
-		Swap(x0, x1);
+	{		
+		std::swap(x0, x1);
 	}
 	if (y0 > y1)
 	{
-		Swap(y0, y1);
+		std::swap(y0, y1);
+	}
+	// in the rect
+	if (x0 < 0)
+	{
+		x0 = 0;
+	}
+	if (x1 > ScreenWidth)
+	{
+		x1 = ScreenWidth;
+	}
+	if (y0 < 0)
+	{
+		y0 = 0;
+	}
+	if (y1 > ScreenHeight)
+	{
+		y1 = ScreenHeight;
 	}
 	for (int i = x0; i < x1; i++)
 	{

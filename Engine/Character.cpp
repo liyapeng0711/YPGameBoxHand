@@ -27,10 +27,29 @@ void Character::Update(float dt)
 			effectActive = false;
 		}
 	}
+	// weapons
+	for (auto& i : weaponOut)
+	{
+		i.Update(dt);
+	}
+	firePeriodCounter += dt;
 }
 
 void Character::SetDirection(const VecF & dir)
 {
+	// weaponDir
+	if (!dir.IsZero())
+	{
+		weaponDir = dir;
+	}
+	else
+	{
+		if (!vel.IsZero())
+		{
+			weaponDir = vel;
+		}
+	}
+	// characterDir
 	if (dir.x > 0)
 	{
 		iCurSequence = Sequence::WalkingRight;
@@ -75,6 +94,11 @@ void Character::Draw(Graphics & gfx) const
 		animations[int(iCurSequence)].DrawColor(VecI(pos), gfx, effectColor);
 	else
 		animations[int(iCurSequence)].Draw(VecI(pos), gfx);
+	// draw weapons
+	for (const auto& i : weaponOut)
+	{
+		i.Draw(gfx);
+	}
 }
 
 void Character::DrawGhost(Graphics & gfx) const
@@ -86,4 +110,14 @@ void Character::ActivateEffect()
 {
 	effectActive = true;
 	effectTime = 0;
+}
+
+void Character::Fire()
+{
+	if (weaponNum > 0 && firePeriodCounter>firePeriod)
+	{
+		weaponNum -= 1;
+		weaponOut.emplace_back(pos + VecF(45.0f, 45.0f), weaponDir);
+		firePeriodCounter = 0.0f;
+	}
 }
