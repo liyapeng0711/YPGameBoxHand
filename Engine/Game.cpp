@@ -43,6 +43,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	// dt
+	float dt = ft.Mark();
+	// move direction
 	VecF dir(0, 0);
 	if (wnd.kbd.KeyIsPressed(VK_LEFT))
 	{
@@ -61,30 +64,45 @@ void Game::UpdateModel()
 		dir.y += 1.0f;
 	}
 	boy.SetDirection(dir);
+	boy.Update(dt);
+	// attack
 	if (wnd.kbd.KeyIsPressed(VK_NUMPAD1))
 	{
 		boy.Fire();
 	}
-
-	VecF dir2(0, 0);
-	if (wnd.kbd.KeyIsPressed('A'))
-	{
-		dir2.x -= 1.0f;
+	// enermy update
+	if (enermy.IsAlive())
+	{	
+		// is attacked?
+		if (boy.AttackCharacter(enermy.GetRect()))
+		{
+			enermy.BeDead();
+		}
+		else
+		{
+			// move direction
+			VecF dir2(0, 0);
+			if (wnd.kbd.KeyIsPressed('A'))
+			{
+				dir2.x -= 1.0f;
+			}
+			if (wnd.kbd.KeyIsPressed('D'))
+			{
+				dir2.x += 1.0f;
+			}
+			if (wnd.kbd.KeyIsPressed('W'))
+			{
+				dir2.y -= 1.0f;
+			}
+			if (wnd.kbd.KeyIsPressed('S'))
+			{
+				dir2.y += 1.0f;
+			}
+			enermy.SetDirection(dir2);
+			enermy.Update(dt);
+		}
 	}
-	if (wnd.kbd.KeyIsPressed('D'))
-	{
-		dir2.x += 1.0f;
-	}
-	if (wnd.kbd.KeyIsPressed('W'))
-	{
-		dir2.y -= 1.0f;
-	}
-	if (wnd.kbd.KeyIsPressed('S'))
-	{
-		dir2.y += 1.0f;
-	}
-	enermy.SetDirection(dir2);
-
+	// test effect
 	while (!wnd.kbd.KeyIsEmpty())
 	{
 		const auto e = wnd.kbd.ReadKey();
@@ -94,15 +112,14 @@ void Game::UpdateModel()
 			hit.Play();
 		}
 	}
-
-	float dt = ft.Mark();
-	boy.Update(dt);
-	enermy.Update(dt);
 }
 
 void Game::ComposeFrame()
 {	
 	font.DrawTextChili("Yapeng Li, Hello!\nNice to meet you:)", wnd.mouse.GetPos(), gfx, Colors::Yellow);
 	boy.Draw(gfx);
-	enermy.Draw(gfx);
+	if (enermy.IsAlive())
+	{
+		enermy.Draw(gfx);
+	}
 }

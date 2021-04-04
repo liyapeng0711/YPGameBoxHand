@@ -7,6 +7,7 @@ public:
 	Weapon(const VecF& pos, const VecF& vel);
 	void Update(float dt);
 	void Draw(Graphics& gfx)const;
+	RectF GetDamageRect()const;
 private:
 	float speed = 300.0f;
 	VecF pos;

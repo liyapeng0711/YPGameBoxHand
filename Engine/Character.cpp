@@ -1,4 +1,6 @@
 #include "Character.h"
+#include <iterator>
+#include <algorithm>
 
 Character::Character(const VecF & pos)
 	:
@@ -120,4 +122,32 @@ void Character::Fire()
 		weaponOut.emplace_back(pos + VecF(45.0f, 45.0f), weaponDir);
 		firePeriodCounter = 0.0f;
 	}
+}
+
+bool Character::IsAlive() const
+{
+	return isAlive;
+}
+
+void Character::BeDead()
+{
+	isAlive = false;
+}
+
+RectF Character::GetRect() const
+{
+	return RectF(pos, 90.0f, 90.0f);
+}
+
+bool Character::AttackCharacter(const RectF & rect)
+{
+	for (auto& i = weaponOut.begin();i!=weaponOut.end(); ++i)
+	{
+		if (i->GetDamageRect().IsOverlappingWith(rect))
+		{
+			weaponOut.erase(i);
+			return true;
+		}
+	}
+	return false;
 }

@@ -14,5 +14,10 @@ void Weapon::Update(float dt)
 
 void Weapon::Draw(Graphics & gfx) const
 {
-	gfx.DrawRect(RectF::FromCenter(pos, 5.0f, 5.0f), Colors::White);
+	gfx.DrawRect(GetDamageRect(), Colors::White);
+}
+
+RectF Weapon::GetDamageRect() const
+{
+	return RectF::FromCenter(pos, 5.0f, 5.0f);
 }

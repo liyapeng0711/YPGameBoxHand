@@ -34,7 +34,7 @@ public:
 	}
 	bool IsOverlappingWith(const Rect & other) const
 	{
-		return left<other.right&&right>other.left&&top<other.bottom&&bottom>other.top;
+		return left<=other.right&&right>=other.left&&top<=other.bottom&&bottom>=other.top;
 	}
 	VecI GetCenter() const
 	{
