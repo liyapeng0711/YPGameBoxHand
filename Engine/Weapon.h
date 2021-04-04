@@ -8,7 +8,7 @@ public:
 	void Update(float dt);
 	void Draw(Graphics& gfx)const;
 private:
-	float speed = 60.0f;
+	float speed = 300.0f;
 	VecF pos;
 	VecF vel = { 0,0 };
 };
